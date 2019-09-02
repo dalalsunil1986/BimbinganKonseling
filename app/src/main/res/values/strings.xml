@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">BimbinganKonseling</string>
+    <string name="title_home">Home</string>
+    <string name="title_data">Data</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="level">
+        <item>Guru BK</item>
+        <item>Orang Tua Siswa</item>
+    </string-array>
+
+    <string-array name="jurusan">
+        <item>Pariwisata</item>
+        <item>Akuntansi</item>
+        <item>Administrasi Perkantoran</item>
+        <item>Penjualan</item>
+        <item>Tata Boga</item>
+        <item>TKJ</item>
+    </string-array>
+
+    <string-array name="kelas">
+        <item>12</item>
+        <item>11</item>
+        <item>10</item>
+    </string-array>
+</resources>
