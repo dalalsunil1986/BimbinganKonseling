@@ -117,8 +117,9 @@ public class AdapterPelanggaran extends RecyclerView.Adapter<AdapterPelanggaran.
                         id_pelanggaran  = mArrayList.get(i).getId();
                         poin            = etPoin.getText().toString();
 
-                        onDialogClickListener.onClickFinish(total_poin_s);
                         postDataPelanggaran(id_siswa,id_pelanggaran,poin);
+                        onDialogClickListener.onClickFinish(total_poin_s);
+
                         myDialog.dismiss();
                     }
                 });

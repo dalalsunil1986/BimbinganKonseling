@@ -7,96 +7,34 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cvSiswa"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_margin="10dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp">
 
-        <TableLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <TableRow
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:weightSum="2">
+            <ImageView
+                android:id="@+id/imgSP"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_email" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:text="Jenis Pelanggaran"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvJenisPelanggaran"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:text="-"
-                    android:textSize="14sp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:weightSum="2">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:text="Tanggal"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvTanggal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:text="-"
-                    android:textSize="14sp" />
-            </TableRow>
-
-            <TableRow
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:weightSum="2">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:text="Total Poin"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvTotalPoin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:text="-"
-                    android:textSize="14sp" />
-            </TableRow>
-
-        </TableLayout>
+            <TextView
+                android:id="@+id/tvSP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/imgSP"
+                android:text="Surat Peringatan"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

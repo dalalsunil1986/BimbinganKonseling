@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.bimbingankonseling.Adapter.AdapterRiwayatKejadian;
 import com.example.bimbingankonseling.Adapter.AdapterSiswa;
 import com.example.bimbingankonseling.Model.DataPoinSiswa;
+import com.example.bimbingankonseling.Model.DataSP;
 import com.example.bimbingankonseling.Model.DataSiswa;
 import com.example.bimbingankonseling.Model.ResponsePoinSiswa;
 import com.example.bimbingankonseling.Model.ResponseSiswa;
@@ -41,7 +42,7 @@ public class OrangTuaActivity extends AppCompatActivity {
     private NotificationManagerCompat notificationManager;
     private RecyclerView rvSiswa;
     private AdapterRiwayatKejadian mAdapter;
-    private List<DataSiswa> dataSiswas = new ArrayList<>();
+    private List<DataSP> dataSP = new ArrayList<>();
     private SessionManager sessionManager;
     private TextView tvKosong;
 
@@ -60,10 +61,6 @@ public class OrangTuaActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
 
         getPoinSiswa(sessionManager.pref.getString("id_siswa",null));
-/*
-        dataSiswas.add(0, new DataSiswa("Meisya Luna Assyura","17361","12","Perkantoran","","088744010377","M.Nasir","Aryani Anwar","Jl.Tinumbu lr.166b","082187779907"));
-        dataSiswas.add(1, new DataSiswa("Ramlah","17372","12","Perkantoran","","81242050035","Syamsuddin","","Jl.Sibula dalam lr.1 no.2a",""));
-        dataSiswas.add(2, new DataSiswa("Nurul Fadhila Al-Qarani","17369","12","Perkantoran","","81218635626","Muh.Arif","","Jl.Kandea 3","082198187823"));*/
 
     }
 
@@ -86,10 +83,16 @@ public class OrangTuaActivity extends AppCompatActivity {
                     }
 
                     if (totalPoin==50 && totalPoin<100){
+                        dataSP.add(0, new DataSP("Surat Peringatan 1"));
                         getNotif("SP 1");
-                    }else if (totalPoin==100 && totalPoin<200){
+                    }else if (totalPoin==100 || totalPoin<200){
+                        dataSP.add(0, new DataSP("Surat Peringatan 1"));
+                        dataSP.add(1, new DataSP("Surat Peringatan 2"));
                         getNotif("SP 2");
                     }else if (totalPoin>=200){
+                        dataSP.add(0, new DataSP("Surat Peringatan 1"));
+                        dataSP.add(1, new DataSP("Surat Peringatan 2"));
+                        dataSP.add(2, new DataSP("Surat Peringatan 3"));
                         getNotif("SP 3");
                     }else{
                         tvKosong.setVisibility(View.VISIBLE);
@@ -111,7 +114,11 @@ public class OrangTuaActivity extends AppCompatActivity {
 
     private void getNotif(String sp) {
 
-        getDataSiswa(sessionManager.pref.getString("id_siswa",null));
+        /*getDataSiswa(sessionManager.pref.getString("id_siswa",null));*/
+        tvKosong.setVisibility(View.GONE);
+
+        mAdapter = new AdapterRiwayatKejadian(OrangTuaActivity.this,dataSP);
+        rvSiswa.setAdapter(mAdapter);
 
         Intent activityIntent = new Intent(this, SuratPanggiilanActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this,
@@ -144,7 +151,9 @@ public class OrangTuaActivity extends AppCompatActivity {
                 }else {
                     tvKosong.setVisibility(View.GONE);
 
-                    postDataPoinSiswa(id_siswa);
+                    mAdapter = new AdapterRiwayatKejadian(OrangTuaActivity.this,dataSP);
+                    rvSiswa.setAdapter(mAdapter);
+                    /*postDataPoinSiswa(id_siswa);*/
                 }
             }
 
@@ -155,7 +164,7 @@ public class OrangTuaActivity extends AppCompatActivity {
         });
     }
 
-    private void postDataPoinSiswa(String id_siswa) {
+    /*private void postDataPoinSiswa(String id_siswa) {
         Call<ResponsePoinSiswa> call = mApiInterface.postPoinSiswa(id_siswa);
         call.enqueue(new Callback<ResponsePoinSiswa>() {
             @Override
@@ -173,7 +182,7 @@ public class OrangTuaActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
     private void postDataPelanggaran(String id_pelanggaran) {
 

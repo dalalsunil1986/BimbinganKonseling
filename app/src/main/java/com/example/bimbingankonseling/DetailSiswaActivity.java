@@ -8,15 +8,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bimbingankonseling.Adapter.AdapterPelanggaran;
 import com.example.bimbingankonseling.Adapter.AdapterSiswa;
 import com.example.bimbingankonseling.Model.DataPelanggaran;
 import com.example.bimbingankonseling.Model.DataPoin;
+import com.example.bimbingankonseling.Model.DataPoinSiswa;
+import com.example.bimbingankonseling.Model.DataSP;
 import com.example.bimbingankonseling.Model.DataSiswa;
 import com.example.bimbingankonseling.Model.ResponsePelanggaran;
+import com.example.bimbingankonseling.Model.ResponsePoinSiswa;
 import com.example.bimbingankonseling.Rest.ApiClient;
 import com.example.bimbingankonseling.Rest.ApiInterface;
 
@@ -36,7 +41,12 @@ public class DetailSiswaActivity extends AppCompatActivity implements AdapterPel
     private List<DataPoin> dataPelanggarans= new ArrayList<>();
     private TextView tvNama,tvNis,tvKelas,tvJurusan,tvNotelp,tvTotalPoin;
     private int total_poin = 0;
-
+    private String id;
+    private String nama;
+    private String nis;
+    private String kelas;
+    private String jurusan;
+    private String notelp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,31 +63,59 @@ public class DetailSiswaActivity extends AppCompatActivity implements AdapterPel
         tvTotalPoin     = findViewById(R.id.tvTotalPoin);
 
         Intent i = getIntent();
-        String id       = i.getStringExtra("id");
-        String nama     = i.getStringExtra("nama");
-        String nis      = i.getStringExtra("nis");
-        String kelas    = i.getStringExtra("kelas");
-        String jurusan  = i.getStringExtra("jurusan");
-        String notelp   = i.getStringExtra("notelp");
+        id       = i.getStringExtra("id");
+        nama     = i.getStringExtra("nama");
+        nis      = i.getStringExtra("nis");
+        kelas    = i.getStringExtra("kelas");
+        jurusan  = i.getStringExtra("jurusan");
+        notelp   = i.getStringExtra("notelp");
 
         tvNama.setText(nama);
         tvNis.setText("Nis : "+nis);
         tvKelas.setText("Kelas : "+kelas);
         tvJurusan.setText(jurusan);
         tvNotelp.setText(notelp);
-        tvTotalPoin.setText("Total Poin : "+String.valueOf(total_poin));
+        /*tvTotalPoin.setText("Total Poin : "+String.valueOf(total_poin));*/
 
         rvPelanggaran.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,2);
         rvPelanggaran.setLayoutManager(layoutManager);
 
+        getPoinSiswa(id);
         getDataPelanggaran(id);
-//        setPelanggaran(dataPelanggarans);
-//
-//        mAdapter = new AdapterPelanggaran(DetailSiswaActivity.this,dataPelanggarans,DetailSiswaActivity.this,total_poin);
-//        rvPelanggaran.setAdapter(mAdapter);
 
         scrollSiswa.smoothScrollTo(0,0);
+    }
+
+    private void getPoinSiswa(String id) {
+        Call<ResponsePoinSiswa> call = mApiInterface.postPoinSiswa(id);
+        call.enqueue(new Callback<ResponsePoinSiswa>() {
+            @Override
+            public void onResponse(Call<ResponsePoinSiswa> call, Response<ResponsePoinSiswa> response) {
+                List<DataPoinSiswa> poinSiswa = response.body().getData();
+                try {
+                    int jmlPoin =0;
+                    int totalPoin=0;
+
+                    for (int i = 0; i<poinSiswa.size();i++) {
+                        String idSiswa          = poinSiswa.get(i).getIdSiswa();
+                        String idPelanggaran    = poinSiswa.get(i).getIdPelanggaran();
+                        String poin             = poinSiswa.get(i).getPoin();
+                        jmlPoin                 = Integer.parseInt(poin);
+                        totalPoin               = totalPoin+jmlPoin;
+                    }
+                    tvTotalPoin.setText("Total Poin : "+String.valueOf(totalPoin));
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponsePoinSiswa> call, Throwable t) {
+                Toast.makeText(DetailSiswaActivity.this, "Jaringan bermasalah", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void getDataPelanggaran(final String id) {
@@ -146,6 +184,12 @@ public class DetailSiswaActivity extends AppCompatActivity implements AdapterPel
     @Override
     public void onClickFinish(int poin) {
         total_poin = total_poin+poin;
-        tvTotalPoin.setText("Total Poin : "+String.valueOf(total_poin ));
+        /*tvTotalPoin.setText("Total Poin : "+String.valueOf(total_poin ));*/
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getPoinSiswa(id);
     }
 }

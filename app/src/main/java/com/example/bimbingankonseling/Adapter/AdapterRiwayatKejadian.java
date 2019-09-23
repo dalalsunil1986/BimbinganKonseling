@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bimbingankonseling.DetailSiswaActivity;
 import com.example.bimbingankonseling.Model.DataPoinSiswa;
+import com.example.bimbingankonseling.Model.DataSP;
 import com.example.bimbingankonseling.Model.DataSiswa;
 import com.example.bimbingankonseling.R;
 import com.example.bimbingankonseling.SuratPanggiilanActivity;
@@ -19,10 +20,10 @@ import java.util.List;
 
 
 public class AdapterRiwayatKejadian extends RecyclerView.Adapter<AdapterRiwayatKejadian.ViewHolder>{
-    private List<DataPoinSiswa> mArrayList;
+    private List<DataSP> mArrayList;
     private Context context;
 
-    public AdapterRiwayatKejadian(Context context, List<DataPoinSiswa> inputData) {
+    public AdapterRiwayatKejadian(Context context, List<DataSP> inputData) {
         mArrayList = inputData;
         this.context = context;
     }
@@ -36,7 +37,7 @@ public class AdapterRiwayatKejadian extends RecyclerView.Adapter<AdapterRiwayatK
 
     @Override
     public void onBindViewHolder(ViewHolder holder,final int i) {
-//        holder.tvJenisPelanggaran.setText(mArrayList.get(i).get());
+        holder.tvSP.setText(mArrayList.get(i).getNamaSP());
 //        holder.tvNis.setText(mArrayList.get(i).getNis());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -62,13 +63,13 @@ public class AdapterRiwayatKejadian extends RecyclerView.Adapter<AdapterRiwayatK
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvJenisPelanggaran,tvTanggal,tvTotalPoin;
+        public TextView tvSP;
 
         public ViewHolder(View v) {
             super(v);
-            tvJenisPelanggaran  = v.findViewById(R.id.tvJenisPelanggaran);
-            tvTanggal           = v.findViewById(R.id.tvTanggal);
-            tvTotalPoin         = v.findViewById(R.id.tvTotalPoin);
+            tvSP    = v.findViewById(R.id.tvSP);
+//            tvTanggal           = v.findViewById(R.id.tvTanggal);
+//            tvTotalPoin         = v.findViewById(R.id.tvTotalPoin);
         }
     }
 }
