@@ -45,7 +45,7 @@ public class AdapterPelanggaran extends RecyclerView.Adapter<AdapterPelanggaran.
     private String id_siswa,id_pelanggaran,poin,id;
 
     public interface OnDialogClickListener{
-        void onClickFinish(int poin);
+        void onClickFinish(int poin,String id);
     }
 
     public AdapterPelanggaran(Context context, List<DataPelanggaran> inputData, OnDialogClickListener onDialogClickListener, int total_poin, String id) {
@@ -117,8 +117,7 @@ public class AdapterPelanggaran extends RecyclerView.Adapter<AdapterPelanggaran.
                         id_pelanggaran  = mArrayList.get(i).getId();
                         poin            = etPoin.getText().toString();
 
-                        postDataPelanggaran(id_siswa,id_pelanggaran,poin);
-                        onDialogClickListener.onClickFinish(total_poin_s);
+                        postDataPelanggaran(id_siswa,id_pelanggaran,poin,total_poin_s);
 
                         myDialog.dismiss();
                     }
@@ -128,12 +127,13 @@ public class AdapterPelanggaran extends RecyclerView.Adapter<AdapterPelanggaran.
         });
     }
 
-    private void postDataPelanggaran(String id_siswa, String id_pelanggaran, String poin) {
+    private void postDataPelanggaran(final String id_siswa, String id_pelanggaran, String poin, final int total_poin_s) {
         Call<ResponseBody> postPoin = mApiInterface.postPoin(id_siswa,id_pelanggaran,poin);
         postPoin.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Toast.makeText(context, "Berhasil Ubah Poin", Toast.LENGTH_SHORT).show();
+                onDialogClickListener.onClickFinish(total_poin_s,id_siswa);
             }
 
             @Override

@@ -75,7 +75,6 @@ public class DetailSiswaActivity extends AppCompatActivity implements AdapterPel
         tvKelas.setText("Kelas : "+kelas);
         tvJurusan.setText(jurusan);
         tvNotelp.setText(notelp);
-        /*tvTotalPoin.setText("Total Poin : "+String.valueOf(total_poin));*/
 
         rvPelanggaran.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this,2);
@@ -87,7 +86,7 @@ public class DetailSiswaActivity extends AppCompatActivity implements AdapterPel
         scrollSiswa.smoothScrollTo(0,0);
     }
 
-    private void getPoinSiswa(String id) {
+    private void getPoinSiswa(final String id) {
         Call<ResponsePoinSiswa> call = mApiInterface.postPoinSiswa(id);
         call.enqueue(new Callback<ResponsePoinSiswa>() {
             @Override
@@ -106,6 +105,8 @@ public class DetailSiswaActivity extends AppCompatActivity implements AdapterPel
                     }
                     tvTotalPoin.setText("Total Poin : "+String.valueOf(totalPoin));
 
+                    Log.e("cek",id);
+                    Log.e("total poin", String.valueOf(totalPoin));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -166,7 +167,7 @@ public class DetailSiswaActivity extends AppCompatActivity implements AdapterPel
         dataPelanggarans.add(24, new DataPoin("Membuang sampah sembarangan",""));
         dataPelanggarans.add(25, new DataPoin("Bermain judi",""));
         dataPelanggarans.add(26, new DataPoin("Terlambat",""));
-        dataPelanggarans.add(27, new DataPoin("Tidak mengikuti upacara",""));
+        dataPelanggarans.add(27, new DataPoin("Ti dak mengikuti upacara",""));
         dataPelanggarans.add(28, new DataPoin("Mengirim surat palsu ke sekolah",""));
         dataPelanggarans.add(29, new DataPoin("anggota badan ditato dan rambut dicat",""));
         dataPelanggarans.add(30, new DataPoin("Berpakaian tidak sesuai dengan seragam sekolah",""));
@@ -182,14 +183,21 @@ public class DetailSiswaActivity extends AppCompatActivity implements AdapterPel
     }
 
     @Override
-    public void onClickFinish(int poin) {
+    public void onClickFinish(int poin,String id) {
         total_poin = total_poin+poin;
+        getPoinSiswa(id);
         /*tvTotalPoin.setText("Total Poin : "+String.valueOf(total_poin ));*/
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        getPoinSiswa(id);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getPoinSiswa(id);
     }
 }

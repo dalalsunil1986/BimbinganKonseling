@@ -97,7 +97,7 @@ public class OrangTuaActivity extends AppCompatActivity {
                     }else{
                         tvKosong.setVisibility(View.VISIBLE);
                     }
-                    Toast.makeText(OrangTuaActivity.this,"Total Poin Siswa "+String.valueOf(totalPoin),Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(OrangTuaActivity.this,"Total Poin Siswa "+String.valueOf(totalPoin),Toast.LENGTH_SHORT).show();
 
                 } catch (Exception e) {
                     e.printStackTrace();
